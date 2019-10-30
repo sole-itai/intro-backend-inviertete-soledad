@@ -1,16 +1,27 @@
 'use strict'
-const express=require('express')
 
-const app=express()
-var port=8080
+const colors=require('colors')
+const keys = require('./config')
+const app = require('./app')
+const mongoose = require('mongoose')
 
-app.get('/',(req,res)=>{
-    res.send('Entraste a /')
+
+
+
+
+var port = keys.PORT
+
+mongoose.connect(keys.db,(err, res)=>{
+    if (err) {
+        console.log(`Hubo un error conectandose a la base de datos: ${err}`)
+        
+    }
+    app.listen(port, () =>{
+    console.log(colors.blue("Tu API esta corriendo en:")
+    + colors.red(`http://localhost:${port}`))
+
 })
-app.get('/soledad',(req,res)=>{
-    res.send('Soy soledad')
 })
 
-app.listen(port, () =>{
-    console.log('felicidades tu aplicacion esta corriendo en: http://localhost:8080')
-})
+
+
